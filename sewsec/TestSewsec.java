@@ -32,7 +32,7 @@ public class TestSewsec {
     l2.afficheLab();
     l1.min(l2).afficheLab();
     System.out.println("resultat de compareTO=" + l1.compareTo(l2));
-    //-1 comme resultat c'est à dire l1 est plus restrectif ce qui est vrai 
+  
 
   }
 }

@@ -43,8 +43,8 @@ public class Label {
   }
 
   public int compareTo(Label l) {
-    int test1 = 1; //test1 pour l'inclusion dans le sens direct 
-    int test2 = 1; // test2 pour tester l'inclusion dans le sens inverse 
+    int test_direct = 1; //test_direct pour l'inclusion dans le sens direct 
+    int test_inverse = 1; // test_inverse pour tester l'inclusion dans le sens inverse 
     if (l.lmap == null) { //label trivial il est moins restrective que tous les labels 
       return - 1;
     }
@@ -56,7 +56,7 @@ public class Label {
 
       while (it.hasNext()) {
         Principal aux = it.next();
-        if (!lmap.get(aux).containsAll(l.lmap.get(aux))) test1 = 0; //tous les readers d'un owner de l2 sont  inclus dans ceux de l1 
+        if (!lmap.get(aux).containsAll(l.lmap.get(aux))) test_direct = 0; //tous les readers d'un owner de l2 sont  inclus dans ceux de l1 
       }
 
     }
@@ -64,18 +64,18 @@ public class Label {
     if (lmap.keySet().containsAll(l.lmap.keySet())) //owners l2 inclus owners l1 
     {
       Set s = l.lmap.keySet();
-      int test = 1;
+      
       Iterator < Principal > it = s.iterator();
 
       while (it.hasNext()) {
         Principal aux = it.next();
-        if (!l.lmap.get(aux).containsAll(lmap.get(aux))) test2 = 0; //tous les readers d'un owner de l1 sont  inclus dans ceux de l2 
+        if (!l.lmap.get(aux).containsAll(lmap.get(aux))) test_inverse = 0; //tous les readers d'un owner de l1 sont  inclus dans ceux de l2 
       }
 
     }
-    if (test1 == 1 && test2 == 1) return 0; //double inclusion implique l1=l2 
-    if (test1 == 1) return 1; // l2 est plus restrictif que l1 
-    if (test2 == 1) return - 1; // l1 est plus restrictif que l2 
+    if (test_direct == 1 && test_inverse == 1) return 0; //double inclusion implique l1=l2 
+    if (test_direct == 1) return 1; // l2 est plus restrictif que l1 
+    if (test_inverse == 1) return - 1; // l1 est plus restrictif que l2 
     //
 
     return - 42000; //l1 est l2 sont incomparables comme l'exemple suivant {hopital:patient} et {hopitam:medecin}
@@ -142,9 +142,9 @@ public class Label {
       System.out.println("Owner--> " + auxp.getName());
       System.out.println(lmap.get(auxp).size());
       for (int i = 0; i < lmap.get(auxp).size(); i++) {
-        Principal shit = (Principal) lmap.get(auxp).get(i);
+        Principal principal = (Principal) lmap.get(auxp).get(i);
         int x = i + 1;
-        System.out.println("Reader num--> " + x + " -->" + shit.getName());
+        System.out.println("Reader num--> " + x + " -->" + principal.getName());
       }
     }
   }
@@ -238,7 +238,7 @@ public class Label {
       Principal aux1 = it1.next();
       Principal aux2 = it2.next();
       if (lmap.get(aux1).equals(l.lmap.get(aux2)) && !aux1.getName().equals(aux2.getName()) && aux2.actsFor(aux1))
-      //Owner2 et owner 1 ont les memeS readers donc on verifie qu'ils sont differnts et que owner2 actsFor owner1
+      //Owner2 et owner 1 ont les memes readers donc on verifie qu'ils sont differnts et que owner2 actsFor owner1
       {
         return true;
 

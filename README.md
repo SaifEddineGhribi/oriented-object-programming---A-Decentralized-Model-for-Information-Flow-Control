@@ -1,4 +1,4 @@
-# oriented-object-programming-A-Decentralized-Model-for-Information-Flow-Control
+# oriented-object-programming-A-Decentralized-Model-for-Information-Flow-Control (February 2017)
 An application of oriented-object programming and an implementation of the paper A Decentralized Model for Information Flow Control
 
 
